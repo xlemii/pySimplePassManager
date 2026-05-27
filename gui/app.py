@@ -21,8 +21,9 @@ class App:
         self.password_entry = tk.Entry(root, show="*")
         self.password_entry.grid(row=2, column=1)
 
-        # --- BUTTON ---
+        # --- BUTTONS ---
         tk.Button(root, text="Add", command=self.add_entry).grid(row=3, column=0, columnspan=2)
+        tk.Button(root, text="Delete", command=self.delete_entry).grid(row=5, column=0, columnspan=2)
 
         # --- LIST ---
         self.listbox = tk.Listbox(root, width=40)
@@ -36,7 +37,16 @@ class App:
             self.login_entry.get(),
             self.password_entry.get()
         )
+        self.refresh()
 
+    def delete_entry(self):
+        selected = self.listbox.curselection()
+
+        if not selected:
+            return
+
+        index = selected[0]
+        self.manager.delete_entry(index)
         self.refresh()
 
     def refresh(self):
